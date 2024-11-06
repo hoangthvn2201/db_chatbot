@@ -3,10 +3,10 @@ from typing import List, Dict
 import torch
 import pandas as pd 
 
-# # 1. Model and Tokenizer Setup
-# model_path = 'phamhai/Llama-3.2-3B-Instruct-Frog'
-# tokenizer = AutoTokenizer.from_pretrained(model_path)
-# model = AutoModelForCausalLM.from_pretrained(model_path)
+# 1. Model and Tokenizer Setup
+model_path = 'phamhai/Llama-3.2-3B-Instruct-Frog'
+tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModelForCausalLM.from_pretrained(model_path)
 df = pd.read_csv('result.csv')
 df.rename(columns={'pic':'contributor'}, inplace=True)
 
