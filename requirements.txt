@@ -1,0 +1,15 @@
+pip
+
+numpy
+pandas
+Levenshtein
+python-Levenshtein
+sqlglot
+scikit-learn
+ipykernel
+
+torch
+transformers
+
+bitsandbytes
+sentence_transformers
