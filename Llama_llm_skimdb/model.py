@@ -1,45 +1,47 @@
 from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
 from typing import List, Dict
 import torch
+import pandas as pd 
 
-# 1. Model and Tokenizer Setup
-model_path = 'phamhai/Llama-3.2-1B-Instruct-Frog'
-tokenizer = AutoTokenizer.from_pretrained(model_path)
-model = AutoModelForCausalLM.from_pretrained(model_path)
+# # 1. Model and Tokenizer Setup
+# model_path = 'phamhai/Llama-3.2-3B-Instruct-Frog'
+# tokenizer = AutoTokenizer.from_pretrained(model_path)
+# model = AutoModelForCausalLM.from_pretrained(model_path)
+df = pd.read_csv('result.csv')
+df.rename(columns={'pic':'contributor'}, inplace=True)
 
-# 2. Pipeline Configuration
-pipe = pipeline(
-    "text-generation",
-    model=model,
-    tokenizer=tokenizer,
-    max_new_tokens=512,
-    do_sample=True,
-    temperature=0.7,
-    top_p=0.95,
-    device='cuda:0'
-)
+def format_table_for_chatbot(df):
+    new_df = df[['innovation_name','task_type','tool','software','product','contributor','dc']]
+    new_df.rename(columns={'innovation_name':'Tên cải tiến', 'task_type':'Loại hình công việc','tool':'Công cụ','software':'Phần mềm','product':'Thành phẩm','contributor':'Tác giả','dc':'Design Center'}, inplace=True)
+    return new_df
+df = format_table_for_chatbot(df)
 
 # 3. Chatbot Class
 class ContextAwareChatbot:
-    def __init__(self, pipeline,max_history: int = 5):
+    def __init__(self,df, max_history: int = 5):
         self.pipeline = pipeline
-        self.model = AutoModelForCausalLM.from_pretrained('phamhai/Llama-3.2-1B-Instruct-Frog')
-        self.tokenizer = AutoTokenizer.from_pretrained('phamhai/Llama-3.2-1B-Instruct-Frog')
+        self.model = AutoModelForCausalLM.from_pretrained('phamhai/Llama-3.2-3B-Instruct-Frog')
+        self.tokenizer = AutoTokenizer.from_pretrained('phamhai/Llama-3.2-3B-Instruct-Frog')
         self.max_history = max_history
         self.conversation_history: List[Dict[str, str]] = []
-        
+        self.df = df 
     def _build_prompt(self) -> str:
         # Build context from history
         history_text = ""
         for exchange in self.conversation_history[-self.max_history:]:
             history_text += f"Human: {exchange['human']}\nAssistant: {exchange['assistant']}\n\n"
-        
+        table = self.df 
         # Create the full prompt with context
-        prompt = f"""Bạn là một trợ lí ảo thông minh có thể trả lời những câu hỏi của người dùng. Dựa vào đoạn hội thoại trong quá khứ, cố gắng trả lời câu hỏi người dùng một cách chính xác và trung thực nhất.
-Đoạn chat trong quá khứ:     
-<START_OF_HISTORY_CONTEXT>
-{history_text}
-<END_OF_HISTORY_CONTEXT>"""
+        prompt = f"""Bạn là một trợ lí ảo thông minh có thể trả lời những câu hỏi của người dùng. Dựa vào thông tin có trong bảng dưới và đoạn hội thoại trong quá khứ, cố gắng trả lời câu hỏi người dùng một cách chính xác và trung thực nhất.
+        Bảng:
+        <START_OF_TABLE>
+        {table}
+        <END_OF_TABLE>
+        Đoạn chat trong quá khứ:
+        <START_OF_HISTORY_CONTEXT>
+        {history_text}
+        <END_OF_HISTORY_CONTEXT>
+        """
         return prompt
     
     def _clean_response(self, response: str) -> str:
@@ -69,8 +71,7 @@ class ContextAwareChatbot:
             ,
             {'role':'user',
              'content':user_input}
-        ] 
-        #role: system, user, assistant
+        ]
         tokenized_chat = self.tokenizer.apply_chat_template(messages, tokenize=True, add_generation_prompt=True, return_tensors='pt')
         outputs = self.model.generate(tokenized_chat, max_new_tokens=256).to('cuda')
         bot_response = self.tokenizer.decode(outputs[0])
@@ -91,7 +92,7 @@ class ContextAwareChatbot:
         self.conversation_history = []
 
 # 4. Create chatbot instance
-chatbot = ContextAwareChatbot(pipe)
+chatbot = ContextAwareChatbot(df)
 
 # 5. Example usage function
 def chat_session():
