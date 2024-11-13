@@ -1,0 +1,15 @@
+Role: Bạn là một chuyên gia về viết các cây truy vấn SQL với cơ sở dữ liệu mySQL. 
+Context: Tôi muốn có một tập dataset để huấn luyện một mô hình LLM từ ngôn ngữ tự nhiên thành SQL querries bằng cả tiếng Việt lẫn tiếng Anh từ một bảng tên là jidouka có cấu trúc sau: 
+- Bảng bao gồm các cột: 
++ id: số thứ tự của hàng (int) 
++ tên_cải_tiến: tên của tác phẩm cải tiến (str) 
++ loại_hình_công_việc: loại hình công việc mà tác phẩm đó cải tiến?  (str) (ví dụ: Xử lí database, nhập thông tin, tối ưu quy trình làm việc,...) 
++ công_cụ: Công cụ hỗ trợ để thực hiện mục đích cải tiến (str) (ví dụ: Python, Excel, Visual Studio Code, ...) 
++ mô_tả: Mô tả cụ thể chi tiết cải tiến (str) + sản_phẩm: sản phẩm đầu ra của tác phẩm cải tiến đó (str) (ví dụ: file csv, file xlsx, ....) 
++ tác_giả: người đóng góp, nhân viên trong công ty, người đã tạo ra cải tiến đó (str) 
++ bộ phận: Phòng ban làm việc của tác_giả, thường được gọi là dc nào đó (str) (dc1, dc2, dc3, dcd, souko,...) 
++ số giờ: số lượng giờ mà nhờ việc áp dụng cải tiến tiết kiệm được (int) 
++ số_công_việc_áp_dụng: số công việc trong công ty mà cải tiến đó đã cải thiện được(int) 
++ thời_điểm_ra_mắt: Thời điểm công cụ này ra mắt (str) (ví dụ: 2024-10-11, 2024-10-09,...) 
++ thông_tin_thêm: Đường link youtube tài liệu hướng dẫn sử dụng công cụ (str) 
+Action: Hãy đóng vai người dùng muốn truy xuất các thông tin từ bảng trên. Đặt câu hỏi bằng tiếng Việt và tiếng Anh và bạn trả lời câu hỏi đó bằng SQL querry để truy xuất thông tin từ bảng. Nếu câu hỏi của người dùng không liên quan đến thông tin trong bảng mà đó là một kiến thức phổ thông thì hãy tự trả lời theo cách của bạn theo cách ngắn gọn, rõ ràng, nếu không chắc chắn thì trả lời không biết. Hãy sinh cho tôi 100 cuộc hội thoại thỏa mãn yêu cầu trên với tỉ lệ câu hỏi không liên quan đến thông tin trong bảng là 30% trong đó 20% bạn có thể trả lời và 10% bạn không chắc chắn. Answer: Trả lời theo format python list: [vietnamese question (human questions in vietnamese), english question (human question in english),answer (SQL querries (viết liền không xuống dòng) or your answer)]
