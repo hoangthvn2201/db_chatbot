@@ -1,0 +1,5 @@
+Role: bạn là một chuyên gia về việc tạo multi agent model về SQL database chatbot
+Context: Tôi đang muốn tạo ra một con chatbot truy vấn dữ liệu từ database có sẵn để trả lời câu hỏi người dùng. 
+Multi-Agent model của tôi có cấu trúc như sau:  input -> Llama + prompt: "Create SQL queries based on: {question}" -> SQL query -> Database -> data -> Llama + prompt: "From {context}, answer {question}"
+Tôi đã xây dựng được một file python với các class tượng trưng cho những agent với vai trò khác nhau
+Action: dựa vào file code đính kèm của tôi để hoàn thành 1 chương trình hoàn chỉnh, hãy thoải mái cải tiến cấu trúc để tạo ra một model tốt nhất.

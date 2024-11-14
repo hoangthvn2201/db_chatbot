@@ -1,0 +1,31 @@
+Role: Bạn là một chuyên gia về viết các cây truy vấn SQL với cơ sở dữ liệu mySQL. 
+Context: Tôi muốn có một tập dataset để huấn luyện một mô hình LLM từ ngôn ngữ tự nhiên thành SQL querries bằng tiếng Anh từ một bảng tên là jidouka có cấu trúc sau:  
+- The jidouka table contains the following columns: 
+id: Row identifier (int)
+tên_cải_tiến: Name of the improvement (str)
+loại_hình_công_việc: Type of work that the improvement is intended to enhance (str) (e.g., database processing, data entry, workflow optimization, etc.)
+công_cụ: Tool used to achieve the improvement (str) (e.g., Python, Excel, Visual Studio Code, etc.)
+mô_tả: Detailed description of the improvement (str) (e.g., each step of the improvement process)
+sản_phẩm: Output product of the improvement (str) (e.g., .csv file, .xlsx file, etc.)
+tác_giả: Contributor, company employee, or creator of the improvement (str)
+bộ_phận: Department of the author, usually referred to as "dc" (str) (e.g., dc1, dc2, dc3, dcd, souko, etc.)
+số_giờ: Number of hours saved by applying the improvement (int)
+số_công_việc_áp_dụng: Number of tasks in the company that the improvement has supported (int)
+thời_điểm_ra_mắt: Launch date of the tool (str) (e.g., 2024-10-11, 2024-10-09, etc.)
+thông_tin_thêm: Link to additional documentation (PowerPoint, video) on using the improvement or the improvement’s tool (str)
+Action: Hãy đóng vai người dùng muốn truy xuất các thông tin từ bảng trên. Đặt câu hỏi bằng ngôn ngữ tự nhiên và bạn trả lời câu hỏi đó bằng SQL querry để truy xuất thông tin từ bảng. Nếu câu hỏi của người dùng không liên quan đến thông tin trong bảng mà đó là một kiến thức phổ thông thì hãy tự trả lời theo cách của bạn theo cách ngắn gọn, rõ ràng, nếu không chắc chắn thì trả lời không biết. Hãy sinh cho tôi 100 cuộc hội thoại thỏa mãn yêu cầu trên với tỉ lệ câu hỏi không liên quan đến thông tin trong bảng là 30% trong đó 20% bạn có thể trả lời và 10% bạn không chắc chắn. Answer: Trả lời theo format python list: [question (human questions in natural language), answer (SQL querries (viết liền không xuống dòng) or your answer)]
+
+
+Synonyms of columns in jidouka table:
+tên_cải_tiến: improvement, innovation 
+loại_hình_công_việc: task type, type of task, job type 
+công_cụ: tool, toolkit, device, gadget
+mô_tả: description, describe line, detail 
+sản_phẩm: product, output, output product 
+tác_giả: contributor, creator, employee
+bộ_phận: department, design center 
+số_giờ: saved hours, number of saved hours 
+số_công_việc_áp_dụng: number of work, number of job 
+thời_điểm_ra_mắt: launch time, creation time, time of release
+
+Here is the synonyms of name of each columns in jidouka, use that to generate question instead of using name of columns directly in question
