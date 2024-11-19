@@ -274,9 +274,9 @@ class MultiAgentModel:
         self.db_connection = DatabaseConnection(db_config)
         
         # Initialize agents
-        self.sql_agent = SQLAgent("C:/Users/dmvns00008/.cache/huggingface/hub/models--huyhoangt2201--llama-3.2-1b-sql_finetuned_billingual_3.0_merged/snapshots/3f15cd5293b218b1e0f603fddae48d230595776a")
+        self.sql_agent = SQLAgent("huyhoangt2201/llama-3.2-1b-sql_finetuned_billingual_3.0_merged")
         self.execute_agent = ExecuteQueryAgent(self.db_connection)
-        self.llm_agent = LLMAgent("C:/Users/dmvns00008/.cache/huggingface/hub/models--phamhai--Llama-3.2-1B-Instruct-Frog/snapshots/57da636ce3374a18f1b4ab29bbaaadbf14532fd1")
+        self.llm_agent = LLMAgent("phamhai/Llama-3.2-1B-Instruct-Frog")
         
     def process_question(self, question: str) -> str:
         """Process user question through the entire pipeline"""
