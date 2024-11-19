@@ -8,7 +8,7 @@ import re
 from contextlib import contextmanager
 import logging
 import os
-os.environ['HF_HOME'] = "C:/Users/dmvns00008/.cache/"
+
 
 # Set up logging
 logging.basicConfig(level=logging.INFO)
