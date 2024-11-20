@@ -1,0 +1,53 @@
+CREATE DATABASE JidoukaDB;
+USE JidoukaDB;
+
+-- Table: Job
+CREATE TABLE Job (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Job_name NVARCHAR(255) NOT NULL,
+);
+
+-- Table: Department
+CREATE TABLE Department (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Department_name NVARCHAR(255) NOT NULL,
+);
+
+-- Table: Author
+CREATE TABLE Author (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Author_name NVARCHAR(255) NOT NULL,
+);
+
+-- Table: Tool
+CREATE TABLE Tool (
+    Id INT PRIMARY KEY AUTO_INCREMENT,
+    Tool_name NVARCHAR(255) NOT NULL,
+);
+
+-- Table: Jidouka
+CREATE TABLE Jidouka (
+    Id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    Improve_name NVARCHAR(255) NOT NULL,
+    Job_id INT,
+    Department_id INT,
+    Author_id INT,
+    Description NVARCHAR(255),
+    Product_name NVARCHAR(255),
+    Time INT,
+    Applications INT,
+    Release_date DATETIME,
+    Other_info NVARCHAR(255),
+    FOREIGN KEY (Job_id) REFERENCES Job(Id),
+    FOREIGN KEY (Department_id) REFERENCES Department(Id),
+    FOREIGN KEY (Author_id) REFERENCES Author(Id)
+);
+
+-- Table: JidoukaTool
+CREATE TABLE JidoukaTool (
+    Jidouka_id BIGINT,
+    Tool_id INT,
+    PRIMARY KEY (Jidouka_id, Tool_id),
+    FOREIGN KEY (Jidouka_id) REFERENCES Jidouka(Id),
+    FOREIGN KEY (Tool_id) REFERENCES Tool(Id)
+);
